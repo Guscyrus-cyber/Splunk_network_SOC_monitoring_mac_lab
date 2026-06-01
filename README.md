@@ -40,7 +40,7 @@ default:
 
 
 
-## Step 2 — Upload Network Dataset
+## Step 2 — Upload Network Dataset**
 
 Settings → Add Data → Upload: mac_netstat.log
 
@@ -102,7 +102,7 @@ Search bar: index=network LISTEN\
 Purpose: count exposed/listening services.
 
 
-Step 10 — Extract Remote Addresses\
+**Step 10 — Extract Remote Addresses**\
 
 
 Search bar:
@@ -131,10 +131,10 @@ Purpose: showing top remote IP connections from extracted remote address.
 Report title: Network Remote IP Connection Report
 
 Description: This report identifies remote IP addresses communicating with the MacBook Pro network dataset.\
-\
 
 
-Step 13 — Save as Dashboard Panel from Extract Remote Addresses
+
+**Step 13 — Save as Dashboard Panel from Extract Remote Addresses**
 
 
 Dashboard title: Network SOC Monitoring Dashboard
@@ -185,8 +185,7 @@ index=network\
 \| table \_time host sourcetype \_raw
 
  Purpose: review active and listening network activity for hunting.\
-\
-\
+
 
 **\_time:** The timestamp when Splunk indexed the network dataset.
 
