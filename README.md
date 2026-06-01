@@ -1,4 +1,4 @@
-**Splunk Network SOC monitoring Mac lab\**
+Splunk Network SOC monitoring Mac lab\
 \
 The goal of this Network SOC Monitoring Lab was to ingest real network connection data collected from a personal MacBook Pro into Splunk Enterprise and simulate a Security Operations Center (SOC) monitoring workflow. Using the mac_netstat.log dataset, network activity was indexed, searched, analyzed, and visualized to gain visibility into active network connections, listening services, and communication patterns. The lab focused on transforming raw network data into actionable security information through dashboards, reports, visualizations, alerts, detection rules, and threat-hunting queries.
 
@@ -38,8 +38,7 @@ default:
 \$SPLUNK_DB/network/colddb\
 \$SPLUNK_DB/network/thaweddb
 
-Save\
-\
+
 
 ## Step 2 — Upload Network Dataset
 
@@ -51,22 +50,19 @@ Sourcetype: mac_netstat
 Review → Submit
 
 \
-Step 3 — Verify Network Ingestion
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Step 3 — Verify Network Ingestion**
 
 Search bar: index=network
 
-Purpose: confirm Splunk received the network dataset.\
-\
-\
-Step 4 — Verify Event Count
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Purpose: confirm Splunk received the network dataset.
+
+**Step 4 — Verify Event Count**
 
 Search bar: index=network \| stats count\
 Purpose: count all ingested network events.
 
-Step 5 — Show Network Events in Table
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Step 5 — Show Network Events in Table**
+
 
 Search bar:\
 \
@@ -76,33 +72,29 @@ index=network\
 Purpose: display clean network dataset events.
 
 \
-Step 6 — Find Established Network Connections
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Step 6 — Find Established Network Connections**
+
 
 Search bar: index=network ESTABLISHED
 
-Purpose: identify active network sessions.\
-\
-\
-Step 7 — Count Established Connections
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Purpose: identify active network sessions.
+
+**Step 7 — Count Established Connections**
+
 
 Search bar: index=network ESTABLISHED \| stats count\
-\
+
 Purpose: count active established connections.\
-\
-\
-Step 8 — Find Listening Ports
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**Step 8 — Find Listening Ports**
 
 Search bar: index=network LISTEN
 
 Purpose: identify services listening for connections.
 
-\
-\
-Step 9 — Count Listening Services
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**Step 9 — Count Listening Services**
+
 
 Search bar: index=network LISTEN\
 \| stats count
@@ -111,7 +103,7 @@ Purpose: count exposed/listening services.
 
 
 Step 10 — Extract Remote Addresses\
------------------------------------
+
 
 Search bar:
 
@@ -121,12 +113,10 @@ index=network ESTABLISHED\
 \| sort - count
 
 Purpose: Identify remote IP addresses found in established network connections. In this dataset, the result 127.0.0.1 shows local loopback communication, meaning the Mac was communicating with itself through local services.\
-\
-\
-Step 11 — Visualization\
-\
+
+**Step 11 — Visualization**\
+
 Search bar:
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 index=network ESTABLISHED\
 \| rex field=\_raw "\s(?\<remote_ip\>\d{1,3}(?:\\\d{1,3}){3})\\\d+\s+ESTABLISHED"\
@@ -136,16 +126,16 @@ index=network ESTABLISHED\
 Purpose: showing top remote IP connections from extracted remote address.
 
 \
-**Step 12 — Save as Report\
+**Step 12 — Save as Report**\
 \**
 Report title: Network Remote IP Connection Report
 
 Description: This report identifies remote IP addresses communicating with the MacBook Pro network dataset.\
 \
 
-\
+
 Step 13 — Save as Dashboard Panel from Extract Remote Addresses
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 Dashboard title: Network SOC Monitoring Dashboard
 
@@ -153,11 +143,9 @@ Panel title: Top Remote Network Connections
 
 Description: A Splunk dashboard was created to visualize network connection activity from the mac_netstat.log dataset. The dashboard provides SOC analysts with a centralized view of network services, listening ports, connection status, and network monitoring information for investigation and threat-hunting purposes.
 
-\
-\
-\
-Step 14 — Create Alert for Established Connections
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**Step 14 — Create Alert for Established Connections**
+
 
 Search bar:\
 \
@@ -168,12 +156,10 @@ index=network ESTABLISHED\
 Alert title: High Number of Established Network Connections
 
 Purpose: alert when active connections exceed a threshold.\
-\
+
 Description: This alert was created to identify established network connections within the network dataset and notify analysts of potentially active network communication requiring further investigation.\
-\
-\
-Step 15 — Create Simple Network Detection Rule
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**Step 15 — Create Simple Network Detection Rule**
 
 Search bar:
 
@@ -185,14 +171,12 @@ index=network ESTABLISHED\
 Detection name: Repeated Remote Network Communication Detection
 
 Purpose: detect repeated communication with the same remote IP.\
-\
+
 A detection query was created to identify IP addresses associated with established network connections. The query extracted remote IP addresses from the network dataset and counted how many times each IP appeared. When the threshold was set to count \> 5, no results were returned because the dataset contained only a single matching established connection.\
-\
-\
+
 After adjusting the threshold to count \>= 1, the query successfully returned one result with the IP address 127.0.0.1. This IP represents the localhost (loopback) interface, indicating that the observed established connection was local to the MacBook Pro rather than communication with an external Internet host. This exercise demonstrated how detection thresholds affect query results and highlighted the importance of tuning detection logic based on the size and characteristics of the available dataset.\
 \
-Step 16 — Threat Hunting Query
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Step 16 — Threat Hunting Query**
 
 Search bar:
 
@@ -200,7 +184,7 @@ index=network\
 \| search ESTABLISHED OR LISTEN\
 \| table \_time host sourcetype \_raw
 
-### Purpose: review active and listening network activity for hunting.\
+ Purpose: review active and listening network activity for hunting.\
 \
 \
 
@@ -246,7 +230,7 @@ and external Internet communications such as:
 This threat-hunting query was used to review active (ESTABLISHED) and listening (LISTEN) network connections from the MacBook Pro dataset. The results provided visibility into protocols, local and remote IP addresses, ports, connection states, and network communication patterns, enabling investigation of both local services and external Internet connections.\
 \
 Step 17 — Network Lab Completion Query
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 Search bar:
 
@@ -254,8 +238,4 @@ index=network\
 \| stats count by sourcetype source host
 
 Purpose: confirm final dataset visibility in Splunk.\
-\
 
-Top of Form
-
-Bottom of Form
