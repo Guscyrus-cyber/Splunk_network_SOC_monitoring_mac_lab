@@ -1,10 +1,10 @@
-Splunk Network SOC monitoring Mac lab\
+# Splunk Network SOC monitoring Mac lab\
 \
 The goal of this Network SOC Monitoring Lab was to ingest real network connection data collected from a personal MacBook Pro into Splunk Enterprise and simulate a Security Operations Center (SOC) monitoring workflow. Using the mac_netstat.log dataset, network activity was indexed, searched, analyzed, and visualized to gain visibility into active network connections, listening services, and communication patterns. The lab focused on transforming raw network data into actionable security information through dashboards, reports, visualizations, alerts, detection rules, and threat-hunting queries.
 
 Throughout the lab, Splunk was used to monitor network events, identify established connections, investigate remote IP communications, review listening services, and develop basic detection and monitoring capabilities. This exercise provided hands-on experience with Splunk Enterprise, Security Information and Event Management (SIEM) workflows, network monitoring, and SOC analyst responsibilities while demonstrating how network telemetry can be leveraged for security operations, incident investigation, and threat hunting.
 
-# Network Index (index=network)
+ # Network index (index=network) 
 
 Network data shows:
 
@@ -40,7 +40,7 @@ default:
 
 
 
-## Step 2 — Upload Network Dataset**
+**Step 2 — Upload Network Dataset**
 
 Settings → Add Data → Upload: mac_netstat.log
 
